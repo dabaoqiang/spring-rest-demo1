@@ -130,8 +130,9 @@ public class GPApplicationContext extends GPDefaultListableBeanFactory implement
                 }
                 field.setAccessible(true);
                 try {
+                   String interfacename =  lowerFirstCase(autowiredBeanName.substring(autowiredBeanName.lastIndexOf(".") + 1));
                     System.out.println("=======================" + instance + "," + autowiredBeanName + "," + this.beanWrapperMap.get(autowiredBeanName));
-                    field.set(instance, this.beanWrapperMap.get(autowiredBeanName).getWrapperInstance());
+                    field.set(instance, this.beanWrapperMap.get(interfacename).getWrapperInstance());
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
@@ -171,7 +172,9 @@ public class GPApplicationContext extends GPDefaultListableBeanFactory implement
                 Class<?>[] interfaces = beanClass.getInterfaces();
                 if (interfaces != null && interfaces.length > 0) {
                     for (Class<?> anInterface : interfaces) {
-                        beanDefinitionMap.put(anInterface.getName(), gpBeanDefinition);
+                        // 可以给接口自定名称
+                        String interfaceName = lowerFirstCase(anInterface.getName().substring((anInterface.getName().lastIndexOf(".") + 1)));
+                        beanDefinitionMap.put(interfaceName, gpBeanDefinition);
                     }
                 }
 
@@ -183,6 +186,18 @@ public class GPApplicationContext extends GPDefaultListableBeanFactory implement
         }
 
 
+    }
+
+    /**
+     * 转换
+     *
+     * @param substring
+     * @return
+     */
+    private String lowerFirstCase(String substring) {
+        char[] chars = substring.toCharArray();
+        chars[0] += 32;
+        return String.valueOf(chars);
     }
 
     /**

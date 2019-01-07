@@ -37,8 +37,12 @@ public class GPDispatcherServlet extends HttpServlet {
         // IOC容器初始化
         GPApplicationContext gpApplicationContext = new GPApplicationContext(config.getInitParameter(location));
         System.out.println("IOC容初始话完成");
-        MyAction myAction = (MyAction) gpApplicationContext.getBean("myAction");
-        myAction.hello("注入bean完成");
+
+        IQueryService iQueryService = (IQueryService) gpApplicationContext.getBean("iQueryService");
+        String good = iQueryService.query("good");
+        System.out.println(good);
+        // MyAction myAction = (MyAction) gpApplicationContext.getBean("myAction");
+        // myAction.hello("注入bean完成");
         // 接口名称还是全路径的名称
     }
 

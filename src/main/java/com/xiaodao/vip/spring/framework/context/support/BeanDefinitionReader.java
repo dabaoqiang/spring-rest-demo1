@@ -98,7 +98,7 @@ public class BeanDefinitionReader {
     public GPBeanDefinition registerBean(String className) {
         if (this.registyBeanClasses.contains(className)) {
             GPBeanDefinition gpBeanDefinition = new GPBeanDefinition();
-            // com.***.**格式
+            // com.***.**格式全定限类名
             gpBeanDefinition.setBeanCLassName(className);
             gpBeanDefinition.setFactoryBeanName(lowerFirstCase(className.substring(className.lastIndexOf(".") + 1)));
             return gpBeanDefinition;
